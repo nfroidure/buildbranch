@@ -1,0 +1,40 @@
+{
+  "name": "buildbranch",
+  "description": "Publish a folder to the given build branch (like gh-pages).",
+  "version": "0.0.1",
+  "homepage": "https://github.com/nfroidure/buildbranch",
+  "author": {
+    "name": "Nicolas Froidure",
+    "url": "http://www.insertafter.com/blog.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nfroidure/buildbranch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nfroidure/buildbranch/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/nfroidure/buildbranch/blob/master/LICENSE"
+    }
+  ],
+  "main": "src/index.js",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "keywords": [
+    "gulpfriendly",
+    "gruntfriendly",
+    "ghpages",
+    "gh-pages",
+    "build",
+    "publish",
+    "git",
+    "github"
+  ],
+  "dependencies": {
+    "rimraf": "~2.2.6"
+  }
+}

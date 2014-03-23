@@ -6,7 +6,7 @@
 First, install `buildbranch` as a development dependency:
 
 ```shell
-npm install --save buildbranch
+npm install buildbranch --save-dev
 ```
 
 Then, use it in your build system:

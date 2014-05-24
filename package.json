@@ -7,6 +7,9 @@
     "name": "Nicolas Froidure",
     "url": "http://www.insertafter.com/blog.html"
   },
+  "bin": {
+    "buildbranch": "./src/bin.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/nfroidure/buildbranch.git"

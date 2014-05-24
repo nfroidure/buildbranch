@@ -3,6 +3,24 @@
 
 ## Usage
 
+You can use this from the command-line or within your build system.
+
+### Command-line
+
+First, install `buildbranch` globally:
+
+```shell
+npm install buildbranch -g
+```
+
+Then, from your master branch, run `buildbranch` with the branch and directory you want to publish. It will default to `gh-pages` and `www`.
+
+```shell
+buildbranch gh-pages www
+```
+
+### Build System
+
 First, install `buildbranch` as a development dependency:
 
 ```shell
@@ -84,4 +102,3 @@ Required. Called when the publication is done.
 
 You may want to contribute to this project, pull requests are welcome if you
  accept to publish under the MIT licence.
-

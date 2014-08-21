@@ -43,6 +43,17 @@ Then, use it in your build system:
   });
 ```
 
+For example in gulp you can do it like this:
+
+```javascript
+var gulp = require('gulp');
+var buildBranch = require('buildbranch');
+
+gulp.task('gh', ['build'], function(done) {
+  buildBranch({ folder: 'dist' }, done);
+});
+```
+
 ## API
 
 ### buildBranch(options, callback)

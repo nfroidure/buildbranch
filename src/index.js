@@ -75,8 +75,7 @@ function buildBranch(options, callback) {
         }
 
         // Pushing commit
-        command = 'git push -f origin ' + options.branch + ';'
-                + ' git checkout ' + curBranch + ' ;'
+        command = ' git checkout ' + curBranch + ' ;'
                 + ' git checkout .';
 
         exec(command, execOptions, function(err) {

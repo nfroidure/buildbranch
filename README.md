@@ -1,30 +1,16 @@
-# buildbranch
+# gulp-build-branch
 > Publish a folder to a given branch (like gh-pages).
 
 ## Usage
 
 You can use this from the command-line or within your build system.
 
-### Command-line
-
-First, install `buildbranch` globally:
-
-```shell
-npm install buildbranch -g
-```
-
-Then, from your master branch, run `buildbranch` with the branch and directory you want to publish. It will default to `gh-pages` and `www`.
-
-```shell
-buildbranch gh-pages www
-```
-
 ### Build System
 
-First, install `buildbranch` as a development dependency:
+First, install `gulp-build-branch` as a development dependency:
 
 ```shell
-npm install buildbranch --save-dev
+npm install gulp-build-branch --save-dev
 ```
 
 Then, use it in your build system:
@@ -32,7 +18,6 @@ Then, use it in your build system:
 ```javascript
   buildBranch({
     branch: 'gh-pages',
-    ignore: ['.git', 'www', 'node_modules'],
     folder: 'www',
     domain: 'example.com'
   }, function(err) {
@@ -97,12 +82,6 @@ Type: `String`
 Default: process.cwd()
 
 The working directory (root of the git repo).
-
-##### options.ignore
-Type: `Array`
-
-A list of files to ignore. 'node_modules' and '.git' will be automatically
- added to the ignore list.
 
 #### callback
 Type: `Function`

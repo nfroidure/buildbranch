@@ -1,26 +1,31 @@
 {
-  "name": "buildbranch",
+  "name": "gulp-build-branch",
   "description": "Publish a folder to the given build branch (like gh-pages).",
   "version": "0.0.1",
-  "homepage": "https://github.com/nfroidure/buildbranch",
-  "author": {
-    "name": "Nicolas Froidure",
-    "url": "http://www.insertafter.com/blog.html"
-  },
+  "homepage": "https://github.com/neoeno/gulp-build-branch",
+  "contributors": [
+    {
+      "name": "Nicolas Froidure",
+      "url": "http://www.insertafter.com/blog.html"
+    },
+    {
+      "name": "Caden Lovelace"
+    }
+  ],
   "bin": {
     "buildbranch": "./src/bin.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/nfroidure/buildbranch.git"
+    "url": "git://github.com/neoeno/gulp-build-branch.git"
   },
   "bugs": {
-    "url": "https://github.com/nfroidure/buildbranch/issues"
+    "url": "https://github.com/neoeno/gulp-build-branch/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/nfroidure/buildbranch/blob/master/LICENSE"
+      "url": "https://github.com/neoeno/gulp-build-branch/blob/master/LICENSE"
     }
   ],
   "main": "src/index.js",

@@ -5,7 +5,7 @@ var path = require('path'),
   q = require('q');
 
 function parseOptions(options) {
-  options.folder = options.folder || 'www';
+  options.folder = options.folder || 'dist';
   options.branch = options.branch || 'gh-pages';
   options.cname = options.cname || 'CNAME';
   options.commit = options.commit || 'Build '+(new Date());

@@ -43,7 +43,7 @@ The branch on which to publish.
 
 ##### options.folder
 Type: `String`
-Default: 'www'
+Default: 'dist'
 
 The folder in which the build is.
 

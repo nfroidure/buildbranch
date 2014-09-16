@@ -13,29 +13,14 @@ First, install `gulp-build-branch` as a development dependency:
 npm install gulp-build-branch --save-dev
 ```
 
-Then, use it in your build system:
-
-```javascript
-  buildBranch({
-    branch: 'gh-pages',
-    folder: 'www',
-    domain: 'example.com'
-  }, function(err) {
-    if(err) {
-      throw err;
-    }
-    console.log('Published!');
-  });
-```
-
-For example in gulp you can do it like this:
+Then, use in Gulp like this:
 
 ```javascript
 var gulp = require('gulp');
-var buildBranch = require('buildbranch');
+var buildBranch = require('gulp-build-branch');
 
-gulp.task('gh', ['build'], function(done) {
-  buildBranch({ folder: 'dist' }, done);
+gulp.task('gh', ['build'], function() {
+  return buildBranch({ folder: 'dist' });
 });
 ```
 
@@ -58,18 +43,7 @@ The branch on wich to publish.
 Type: `String`
 Default: 'www'
 
-The folder in wich the build is.
-
-##### options.domain
-Type: `String`
-
-The domain name that will fill the cname file.
-
-##### options.cname
-Type: `String`
-Default: 'CNAME'
-
-The name of the file enabling custom domain name on you build platform.
+The folder in which the build is.
 
 ##### options.commit
 Type: `String`
@@ -82,11 +56,6 @@ Type: `String`
 Default: process.cwd()
 
 The working directory (root of the git repo).
-
-#### callback
-Type: `Function`
-
-Required. Called when the publication is done.
 
 ### Contributing / Issues
 

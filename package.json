@@ -12,9 +12,6 @@
       "name": "Caden Lovelace"
     }
   ],
-  "bin": {
-    "buildbranch": "./src/bin.js"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/neoeno/gulp-build-branch.git"
@@ -34,7 +31,6 @@
   },
   "keywords": [
     "gulpfriendly",
-    "gruntfriendly",
     "ghpages",
     "gh-pages",
     "build",
@@ -43,6 +39,8 @@
     "github"
   ],
   "dependencies": {
-    "rimraf": "~2.2.6"
+    "gift": "^0.4.3-1",
+    "gulp-util": "^3.0.1",
+    "q": "^1.0.1"
   }
 }

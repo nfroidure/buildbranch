@@ -1,67 +1,59 @@
 // Publish task
-var exec = require('child_process').exec,
-  path = require('path'),
-  rimraf = require('rimraf'),
-  fs = require('fs')
-;
+var path = require('path'),
+  util = require('gulp-util'),
+  gift = require('gift'),
+  q = require('q');
 
-function buildBranch(options, callback) {
-
-  var execOptions = {},
-    command = ''
-  ;
-
-  // Checking options
+function parseOptions(options) {
   options.folder = options.folder || 'www';
   options.branch = options.branch || 'gh-pages';
   options.cname = options.cname || 'CNAME';
   options.commit = options.commit || 'Build '+(new Date());
   options.cwd = options.cwd || process.cwd();
-  execOptions.cwd = options.cwd;
+  return options;
+}
 
-  // Switch to ghpages branch
-  fs.exists(path.join(options.cwd, options.folder, '.git'), function(exists) {
+function buildBranch(options_) {
+  var options, distRepoDir, distRepo, rootRepo, deferred;
+  options = parseOptions(options_);
+  deferred = q.defer();
 
-    if(!exists) {
-      command = 'git init ' + options.folder;
-    }else{
-      command = ':'; // noop
-    }
+  distRepoDir = path.join(options.cwd, options.folder);
+  rootRepo = gift(options.cwd);
 
-    exec(command, execOptions, function(err) {
-      if(err) {
-        callback(err); return;
-      }
 
-      // Add the domain cname field
-      if(options.domain) {
-        fs.writeFileSync(path.join(options.cwd, options.folder, options.cname), options.domain);
-      }
+  // First, init repository in our dist dir
+  gift.init(distRepoDir, function(err, repo) {
 
-      // Commit files
-      command = '(cd ' + options.folder + ' && ' +
-              'git add -A . && ' +
-              'git commit -m "' + options.commit.replace('"', '\\"') + '" )';
+    // Check if repo, which may exist already, has any changes.
+    repo.status(function(err, status) {
+      if(status.clean) {
+        util.log("BuildBranch:", util.colors.blue("No changes to be deployed."));
+        deferred.resolve();
 
-      exec(command, execOptions, function(err) {
-        if(err) {
-          callback(); return;
-        }
+      }else{
 
-        // Fetch branch into our repo.
-        command = 'git fetch ' + options.folder + ' master:' + options.branch;
+        // Otherwise, add everything to new repo,
+        repo.add('* -A', function(err) {
+          if(err) throw err;
 
-        exec(command, execOptions, function(err) {
-          if(err) {
-            callback(err); return;
-          }
+          // Commit,
+          repo.commit(options.commit, function(err) {
 
-          callback();
+            // And fetch the branch from our root repo.
+            rootRepo.remote_fetch(options.folder + '/ master:' + options.branch, function(err) {
+              if(err) throw err;
 
+              deferred.resolve();
+            });
+
+          });
         });
-      });
+      }
     });
   });
+
+  return deferred.promise;
 }
 
 module.exports = buildBranch;

@@ -1,7 +1,7 @@
 {
   "name": "gulp-build-branch",
   "description": "Publish a folder to the given build branch (like gh-pages).",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/neoeno/gulp-build-branch",
   "contributors": [
     {

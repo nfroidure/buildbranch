@@ -41,7 +41,7 @@ function buildBranch(options_) {
           repo.commit(options.commit, function(err) {
 
             // And fetch the branch from our root repo.
-            rootRepo.remote_fetch(options.folder + '/ master:' + options.branch, function(err) {
+            rootRepo.remote_fetch('-f ' + options.folder + '/ master:' + options.branch, function(err) {
               if(err) throw err;
 
               deferred.resolve();

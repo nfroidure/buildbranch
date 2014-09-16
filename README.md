@@ -1,11 +1,13 @@
 # gulp-build-branch
-> Publish a folder to a given branch (like gh-pages).
+__Publish a folder to a given branch (like gh-pages).__
+
+This plugin initializes a separate git repo in your build folder which it then
+`git fetch`es into your main repo. This means your working copy doesn't get
+clobbered.
+
+PR's welcome! 
 
 ## Usage
-
-You can use this from the command-line or within your build system.
-
-### Build System
 
 First, install `gulp-build-branch` as a development dependency:
 
@@ -13,7 +15,7 @@ First, install `gulp-build-branch` as a development dependency:
 npm install gulp-build-branch --save-dev
 ```
 
-Then, use in Gulp like this:
+Then, use it in a Gulp task like this:
 
 ```javascript
 var gulp = require('gulp');
@@ -26,7 +28,7 @@ gulp.task('gh', ['build'], function() {
 
 ## API
 
-### buildBranch(options, callback)
+### buildBranch(options)
 
 #### options
 Type: `Object`
@@ -37,7 +39,7 @@ Required. An object containing the following options.
 Type: `String`
 Default: 'gh-pages'
 
-The branch on wich to publish.
+The branch on which to publish.
 
 ##### options.folder
 Type: `String`
@@ -56,8 +58,3 @@ Type: `String`
 Default: process.cwd()
 
 The working directory (root of the git repo).
-
-### Contributing / Issues
-
-You may want to contribute to this project, pull requests are welcome if you
- accept to publish under the MIT licence.

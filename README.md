@@ -5,7 +5,7 @@ This plugin initializes a separate git repo in your build folder which it then
 `git fetch`es into your main repo. This means your working copy doesn't get
 clobbered.
 
-PR's welcome! 
+PR's welcome!
 
 ## Usage
 
@@ -21,7 +21,7 @@ Then, use it in a Gulp task like this:
 var gulp = require('gulp');
 var buildBranch = require('gulp-build-branch');
 
-gulp.task('gh', ['build'], function() {
+gulp.task('githubPages', ['build'], function() {
   return buildBranch({ folder: 'dist' });
 });
 ```

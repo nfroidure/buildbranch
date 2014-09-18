@@ -34,7 +34,7 @@ function buildBranch(options_) {
       }else{
 
         // Otherwise, add everything to new repo,
-        repo.add('* -A', function(err) {
+        repo.add('-A', function(err) {
           if(err) throw err;
 
           // Commit,

@@ -2,20 +2,28 @@
 var path = require('path'),
   util = require('gulp-util'),
   gift = require('gift'),
-  q = require('q');
+  q = require('q'),
+  distRepoDir, distRepo, rootRepo, deferred, options = {};
 
-function parseOptions(options) {
-  options.folder = options.folder || 'dist';
-  options.branch = options.branch || 'gh-pages';
-  options.cname = options.cname || 'CNAME';
-  options.commit = options.commit || 'Build '+(new Date());
-  options.cwd = options.cwd || process.cwd();
+function parseOptions(options_) {
+  options.folder = options_.folder || 'dist';
+  options.branch = options_.branch || 'gh-pages';
+  options.cname = options_.cname || 'CNAME';
+  options.commit = options_.commit || 'Build '+(new Date());
+  options.cwd = options_.cwd || process.cwd();
   return options;
 }
 
+function fetchFromRootRepo() {
+  rootRepo.remote_fetch('-f ' + options.folder + '/ master:' + options.branch, function(err) {
+    if(err) throw err;
+
+    deferred.resolve();
+  });
+}
+
 function buildBranch(options_) {
-  var options, distRepoDir, distRepo, rootRepo, deferred;
-  options = parseOptions(options_);
+  parseOptions(options_);
   deferred = q.defer();
 
   distRepoDir = path.join(options.cwd, options.folder);
@@ -29,7 +37,9 @@ function buildBranch(options_) {
     repo.status(function(err, status) {
       if(status.clean) {
         util.log("BuildBranch:", util.colors.blue("No changes to be deployed."));
-        deferred.resolve();
+
+        // Fetch it anyway, in cases where multiple deploy branches might be wanted.
+        fetchFromRootRepo();
 
       }else{
 
@@ -39,14 +49,8 @@ function buildBranch(options_) {
 
           // Commit,
           repo.commit(options.commit, function(err) {
-
             // And fetch the branch from our root repo.
-            rootRepo.remote_fetch('-f ' + options.folder + '/ master:' + options.branch, function(err) {
-              if(err) throw err;
-
-              deferred.resolve();
-            });
-
+            fetchFromRootRepo();
           });
         });
       }

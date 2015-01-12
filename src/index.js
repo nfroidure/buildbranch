@@ -1,96 +1,63 @@
 // Publish task
-var exec = require('child_process').exec
-  , path = require('path')
-  , rimraf = require('rimraf')
-  , fs = require('fs')
-;
+var path = require('path'),
+  util = require('gulp-util'),
+  gift = require('gift'),
+  q = require('q'),
+  distRepoDir, distRepo, rootRepo, deferred, options = {};
 
-function buildBranch(options, callback) {
+function parseOptions(options_) {
+  options.folder = options_.folder || 'dist';
+  options.branch = options_.branch || 'gh-pages';
+  options.cname = options_.cname || 'CNAME';
+  options.commit = options_.commit || 'Build '+(new Date());
+  options.cwd = options_.cwd || process.cwd();
+  return options;
+}
 
-  var curBranch = 'master'
-    , execOptions = {}
-    , command = ''
-  ;
+function fetchFromRootRepo() {
+  rootRepo.remote_fetch('-f ' + options.folder + '/ master:' + options.branch, function(err) {
+    if(err) throw err;
 
-  // Checking options
-  options.folder = options.folder || 'www';
-  options.branch = options.branch || 'gh-pages';
-  options.ignore = options.ignore || [];
-  options.ignore.push('.git', 'node_modules', options.folder);
-  options.cname = options.cname || 'CNAME';
-  options.commit = options.commit || 'Build '+(new Date());
-  options.cwd = options.cwd || process.cwd();
-  execOptions.cwd = options.cwd;
-
-  // Remember the current branch
-  command = 'git rev-parse --abbrev-ref HEAD'
-
-  exec(command, execOptions, function(err, stdout, stderr) {
-    if(err) {
-      callback(err); return;
-    }
-
-    curBranch = stdout.trim();
-
-    // Switch to ghpages branch
-    command = 'git branch -D ' + options.branch + ';'
-      +' git checkout --orphan ' + options.branch + ';'
-      +' git rm -r --cached .';
-
-    exec(command, execOptions, function(err) {
-      var ignore;
-      if(err) {
-        callback(err); return;
-      }
-
-      // delete all files except the untracked ones
-      ignore = options.ignore.slice(0);
-      fs.readdirSync(options.cwd).forEach(function(file) {
-        if(-1 === ignore.indexOf(file)) {
-          rimraf.sync(path.join(options.cwd, file));
-        }
-      });
-      fs.readdirSync(path.join(options.cwd, options.folder))
-        .forEach(function(file) {
-          fs.renameSync(path.join(options.cwd, options.folder, file),
-            path.join(options.cwd, file));
-        });
-      fs.rmdirSync(path.join(options.cwd, options.folder));
-
-      // Add the domain cname field
-      if(options.domain) {
-        fs.writeFileSync(path.join(options.cwd, options.cname), options.domain);
-      }
-
-      // Add a new ignore file
-      ignore.push('.gitignore');
-      fs.writeFileSync(path.join(options.cwd, '.gitignore'), ignore.join('\n'));
-
-      // Commit files
-      command = 'git add .;'
-              + ' git commit -m "' + options.commit.replace('"', '\\"') + '"';
-      exec(command, execOptions, function(err) {
-        if(err) {
-          callback(err); return;
-        }
-
-        // Pushing commit
-        command = 'git push -f origin ' + options.branch + ';'
-                + ' git checkout ' + curBranch + ' ;'
-                + ' git checkout .';
-
-        exec(command, execOptions, function(err) {
-          if(err) {
-            callback(err); return;
-          }
-
-          callback();
-
-        });
-      });
-    });
+    deferred.resolve();
   });
 }
 
-module.exports = buildBranch;
+function buildBranch(options_) {
+  parseOptions(options_);
+  deferred = q.defer();
 
+  distRepoDir = path.join(options.cwd, options.folder);
+  rootRepo = gift(options.cwd);
+
+
+  // First, init repository in our dist dir
+  gift.init(distRepoDir, function(err, repo) {
+
+    // Check if repo, which may exist already, has any changes.
+    repo.status(function(err, status) {
+      if(status.clean) {
+        util.log("BuildBranch:", util.colors.blue("No changes to be deployed."));
+
+        // Fetch it anyway, in cases where multiple deploy branches might be wanted.
+        fetchFromRootRepo();
+
+      }else{
+
+        // Otherwise, add everything to new repo,
+        repo.add('-A', function(err) {
+          if(err) throw err;
+
+          // Commit,
+          repo.commit(options.commit, function(err) {
+            // And fetch the branch from our root repo.
+            fetchFromRootRepo();
+          });
+        });
+      }
+    });
+  });
+
+  return deferred.promise;
+}
+
+module.exports = buildBranch;

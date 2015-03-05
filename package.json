@@ -1,7 +1,7 @@
 {
   "name": "buildbranch",
   "description": "Publish a folder to the given build branch (like gh-pages).",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/nfroidure/buildbranch",
   "author": {
     "name": "Nicolas Froidure",

@@ -16,7 +16,7 @@ npm install buildbranch -g
 Then, from your master branch, run `buildbranch` with the branch and directory you want to publish. It will default to `gh-pages` and `www`.
 
 ```shell
-buildbranch gh-pages www
+buildbranch gh-pages www example.com
 ```
 
 ### Build System

@@ -32,6 +32,7 @@ Then, use it in your build system:
 ```javascript
   buildBranch({
     branch: 'gh-pages',
+    remote: 'origin',
     ignore: ['.git', 'www', 'node_modules'],
     folder: 'www',
     domain: 'example.com'
@@ -68,6 +69,12 @@ Type: `String`
 Default: 'gh-pages'
 
 The branch on wich to publish.
+
+##### options.remote
+Type: `String`
+Default: 'origin'
+
+The remote repository on wich to publish.
 
 ##### options.folder
 Type: `String`

@@ -15,6 +15,7 @@ function buildBranch(options, callback) {
   // Checking options
   options.folder = options.folder || 'www';
   options.branch = options.branch || 'gh-pages';
+  options.remote = options.remote || 'origin';
   options.ignore = options.ignore || [];
   options.ignore.push('.git', 'node_modules', options.folder);
   options.cname = options.cname || 'CNAME';
@@ -75,7 +76,7 @@ function buildBranch(options, callback) {
         }
 
         // Pushing commit
-        command = 'git push -f origin ' + options.branch + ';'
+        command = 'git push -f ' + options.remote + ' ' + options.branch + ';'
                 + ' git checkout ' + curBranch + ' ;'
                 + ' git checkout .';
 

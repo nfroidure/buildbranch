@@ -13,7 +13,8 @@ First, install `buildbranch` globally:
 npm install buildbranch -g
 ```
 
-Then, from your master branch, run `buildbranch` with the branch and directory you want to publish. It will default to `gh-pages` and `www`.
+Then, from your master branch, run `buildbranch` with the branch and directory
+ you want to publish. It will default to `gh-pages` and `www`.
 
 ```shell
 buildbranch gh-pages www example.com
@@ -35,7 +36,7 @@ Then, use it in your build system:
     remote: 'origin',
     ignore: ['.git', 'www', 'node_modules'],
     folder: 'www',
-    domain: 'example.com'
+    domain: 'example.com',
   }, function(err) {
     if(err) {
       throw err;
@@ -95,9 +96,10 @@ The name of the file enabling custom domain name on you build platform.
 
 ##### options.commit
 Type: `String`
-Default: 'Build %curtimestamp%'
+Default: 'Build $'
 
-The commit label.
+The commit label, the first `$` occurrence in the given string will be replaced
+ by the current date.
 
 ##### options.cwd
 Type: `String`

@@ -1,16 +1,15 @@
-// Publish task
-var exec = require('child_process').exec
-  , path = require('path')
-  , rimraf = require('rimraf')
-  , fs = require('fs')
-;
+'use strict';
+
+var exec = require('child_process').exec;
+var path = require('path');
+var rimraf = require('rimraf');
+var fs = require('fs');
 
 function buildBranch(options, callback) {
 
-  var curBranch = 'master'
-    , execOptions = {}
-    , command = ''
-  ;
+  var curBranch = 'master';
+  var execOptions = {};
+  var command = '';
 
   // Checking options
   options.folder = options.folder || 'www';
@@ -19,14 +18,14 @@ function buildBranch(options, callback) {
   options.ignore = options.ignore || [];
   options.ignore.push('.git', 'node_modules', options.folder);
   options.cname = options.cname || 'CNAME';
-  options.commit = options.commit || 'Build '+(new Date());
+  options.commit = (options.commit || 'Build $').replace('$', (new Date()).toISOString());
   options.cwd = options.cwd || process.cwd();
   execOptions.cwd = options.cwd;
 
   // Remember the current branch
-  command = 'git rev-parse --abbrev-ref HEAD'
+  command = 'git rev-parse --abbrev-ref HEAD';
 
-  exec(command, execOptions, function(err, stdout, stderr) {
+  exec(command, execOptions, function(err, stdout) {
     if(err) {
       callback(err); return;
     }
@@ -34,12 +33,13 @@ function buildBranch(options, callback) {
     curBranch = stdout.trim();
 
     // Switch to ghpages branch
-    command = 'git branch -D ' + options.branch + ';'
-      +' git checkout --orphan ' + options.branch + ';'
-      +' git rm -r --cached .';
+    command = 'git branch -D ' + options.branch + ';' +
+      ' git checkout --orphan ' + options.branch + ';' +
+      ' git rm -r --cached .';
 
     exec(command, execOptions, function(err) {
       var ignore;
+
       if(err) {
         callback(err); return;
       }
@@ -68,17 +68,17 @@ function buildBranch(options, callback) {
       fs.writeFileSync(path.join(options.cwd, '.gitignore'), ignore.join('\n'));
 
       // Commit files
-      command = 'git add .;'
-              + ' git commit -m "' + options.commit.replace('"', '\\"') + '"';
+      command = 'git add .;' +
+        ' git commit -m "' + options.commit.replace('"', '\\"') + '"';
       exec(command, execOptions, function(err) {
         if(err) {
           callback(err); return;
         }
 
         // Pushing commit
-        command = 'git push -f ' + options.remote + ' ' + options.branch + ';'
-                + ' git checkout ' + curBranch + ' ;'
-                + ' git checkout .';
+        command = 'git push -f ' + options.remote + ' ' + options.branch + ';' +
+                  ' git checkout ' + curBranch + ' ;' +
+                  ' git checkout .';
 
         exec(command, execOptions, function(err) {
           if(err) {
@@ -94,4 +94,3 @@ function buildBranch(options, callback) {
 }
 
 module.exports = buildBranch;
-

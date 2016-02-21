@@ -1,18 +1,19 @@
 #!/usr/bin/env node
 
-var buildBranch = require('./index.js')
-  , branch = process.argv[2]
-  , dir = process.argv[3]
-  , domain = process.argv[4]
-;
+'use strict';
+
+var buildBranch = require('./index.js');
+var branch = process.argv[2];
+var dir = process.argv[3];
+var domain = process.argv[4];
 
 buildBranch({
   branch: branch || 'gh-pages',
   folder: dir || 'www',
   domain: domain || '',
-}, function(err) {
+}, function buildBranchCLICb(err) {
   if(err) {
     throw err;
   }
-  console.log('Published!');
+  console.log('Published!'); // eslint-disable-line
 });

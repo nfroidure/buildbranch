@@ -1,15 +1,15 @@
 'use strict';
 
-var exec = require('child_process').exec;
-var path = require('path');
-var rimraf = require('rimraf');
-var fs = require('fs');
+const exec = require('child_process').exec;
+const path = require('path');
+const rimraf = require('rimraf');
+const fs = require('fs');
 
 function buildBranch(options, callback) {
 
-  var curBranch = 'master';
-  var execOptions = {};
-  var command = '';
+  let curBranch = 'master';
+  const execOptions = {};
+  let command = '';
 
   // Checking options
   options.folder = options.folder || 'www';
@@ -26,7 +26,7 @@ function buildBranch(options, callback) {
   // Remember the current branch
   command = 'git rev-parse --abbrev-ref HEAD';
 
-  exec(command, execOptions, function(err, stdout) {
+  exec(command, execOptions, (err, stdout) => {
     if(err) {
       callback(err); return;
     }
@@ -38,8 +38,8 @@ function buildBranch(options, callback) {
       ' git checkout --orphan ' + options.branch + ';' +
       ' git rm -r --cached .';
 
-    exec(command, execOptions, function(err) {
-      var ignore;
+    exec(command, execOptions, (err) => {
+      let ignore;
 
       if(err) {
         callback(err); return;
@@ -47,13 +47,13 @@ function buildBranch(options, callback) {
 
       // delete all files except the untracked ones
       ignore = options.ignore.slice(0);
-      fs.readdirSync(options.cwd).forEach(function(file) {
+      fs.readdirSync(options.cwd).forEach((file) => {
         if(-1 === ignore.indexOf(file)) {
           rimraf.sync(path.join(options.cwd, file));
         }
       });
       fs.readdirSync(path.join(options.cwd, options.folder))
-        .forEach(function(file) {
+        .forEach((file) => {
           fs.renameSync(path.join(options.cwd, options.folder, file),
             path.join(options.cwd, file));
         });
@@ -72,7 +72,7 @@ function buildBranch(options, callback) {
       command = 'git add .;' +
         ' git commit -m "' + options.commit.replace('"', '\\"') + '"' +
         (options.noVerify ? ' --no-verify' : '');
-      exec(command, execOptions, function(err) {
+      exec(command, execOptions, (err) => {
         if(err) {
           callback(err); return;
         }
@@ -82,7 +82,7 @@ function buildBranch(options, callback) {
                   ' git checkout ' + curBranch + ' ;' +
                   ' git checkout .';
 
-        exec(command, execOptions, function(err) {
+        exec(command, execOptions, (err) => {
           if(err) {
             callback(err); return;
           }

@@ -3,10 +3,7 @@
   "description": "Publish a folder to the given build branch (like gh-pages).",
   "version": "1.0.0",
   "homepage": "https://github.com/nfroidure/buildbranch",
-  "author": {
-    "name": "Nicolas Froidure",
-    "url": "http://www.insertafter.com/blog.html"
-  },
+  "author": "Nicolas Froidure",
   "bin": {
     "buildbranch": "./src/bin.js"
   },
@@ -15,9 +12,11 @@
     "url": "git://github.com/nfroidure/buildbranch.git"
   },
   "scripts": {
+    "cli": "env NODE_ENV=${NODE_ENV:-cli}",
     "lint": "eslint src/*.js",
-    "preversion": "npm run lint",
-    "cli": "env NPM_RUN_CLI=1"
+    "metapak": "metapak || echo 'Please `npm install --save-dev metapak`' && exit 0",
+    "postinstall": "npm run metapak",
+    "preversion": "npm t && npm run lint"
   },
   "bugs": {
     "url": "https://github.com/nfroidure/buildbranch/issues"
@@ -25,7 +24,7 @@
   "license": "MIT",
   "main": "src/index",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">=6.9.5"
   },
   "keywords": [
     "gulpfriendly",
@@ -38,10 +37,17 @@
     "github"
   ],
   "dependencies": {
+    "debug": "1.0.0",
     "rimraf": "^2.5.2"
   },
   "devDependencies": {
-    "eslint": "^1.10.1",
-    "eslint-config-simplifield": "^1.2.2"
+    "coveralls": "2.11.15",
+    "eslint": "3.4.0",
+    "eslint-config-simplifield": "4.1.1",
+    "istanbul": "0.4.5",
+    "metapak": "0.0.15",
+    "metapak-nfroidure": "^0.1.0",
+    "mocha": "3.2.0",
+    "mocha-lcov-reporter": "1.2.0"
   }
 }

@@ -2,11 +2,11 @@
 
 'use strict';
 
-var buildBranch = require('./index.js');
-var branch = process.argv[2];
-var dir = process.argv[3];
-var domain = process.argv[4];
-var noVerify = process.argv[4];
+const buildBranch = require('./index.js');
+const branch = process.argv[2];
+const dir = process.argv[3];
+const domain = process.argv[4];
+const noVerify = process.argv[4];
 
 buildBranch({
   branch: branch || 'gh-pages',

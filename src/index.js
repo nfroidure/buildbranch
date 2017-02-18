@@ -20,6 +20,7 @@ function buildBranch(options, callback) {
   options.cname = options.cname || 'CNAME';
   options.commit = (options.commit || 'Build $').replace('$', (new Date()).toISOString());
   options.cwd = options.cwd || process.cwd();
+  options.noVerify = options.noVerify || false;
   execOptions.cwd = options.cwd;
 
   // Remember the current branch
@@ -69,7 +70,8 @@ function buildBranch(options, callback) {
 
       // Commit files
       command = 'git add .;' +
-        ' git commit -m "' + options.commit.replace('"', '\\"') + '"';
+        ' git commit -m "' + options.commit.replace('"', '\\"') + '"' +
+        (options.noVerify ? ' --no-verify' : '');
       exec(command, execOptions, function(err) {
         if(err) {
           callback(err); return;

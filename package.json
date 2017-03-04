@@ -7,16 +7,28 @@
   "bin": {
     "buildbranch": "./src/bin.js"
   },
+  "metapak": {
+    "configs": [
+      "readme"
+    ],
+    "data": {
+      "files": "src/**.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/nfroidure/buildbranch.git"
   },
   "scripts": {
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
-    "lint": "eslint src/*.js",
+    "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
+    "lint": "eslint src/**.js",
     "metapak": "metapak || echo 'Please `npm install --save-dev metapak`' && exit 0",
-    "postinstall": "npm run metapak",
-    "preversion": "npm t && npm run lint"
+    "postinstall": "npm run metapak; npm run metapak --silent",
+    "preversion": "npm t && npm run lint",
+    "test": "exit 0",
+    "version": "npm run changelog && git add CHANGELOG.md"
   },
   "bugs": {
     "url": "https://github.com/nfroidure/buildbranch/issues"
@@ -37,17 +49,39 @@
     "github"
   ],
   "dependencies": {
-    "debug": "1.0.0",
+    "debug": "2.6.1",
     "rimraf": "^2.5.2"
   },
   "devDependencies": {
+    "commitizen": "^2.9.6",
+    "conventional-changelog-cli": "^1.2.0",
     "coveralls": "2.11.15",
-    "eslint": "3.4.0",
+    "cz-conventional-changelog": "^2.0.0",
+    "eslint": "3.16.0",
     "eslint-config-simplifield": "4.1.1",
     "istanbul": "0.4.5",
-    "metapak": "0.0.15",
-    "metapak-nfroidure": "^0.1.0",
+    "metapak": "0.0.18",
+    "metapak-nfroidure": "^0.4.1",
     "mocha": "3.2.0",
-    "mocha-lcov-reporter": "1.2.0"
+    "mocha-lcov-reporter": "1.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "greenkeeper": {
+    "ignore": [
+      "debug",
+      "eslint",
+      "eslint-config-simplifield",
+      "mocha",
+      "mocha-lcov-reporter",
+      "commitizen",
+      "cz-conventional-changelog",
+      "coveralls",
+      "istanbul",
+      "conventional-changelog-cli"
+    ]
   }
 }

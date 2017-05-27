@@ -52,6 +52,10 @@ function buildBranch(options, callback) {
           rimraf.sync(path.join(options.cwd, file));
         }
       });
+      // Check if build folder exists and is not empty
+      if(!fs.existsSync(options.folder) || !fs.readdirSync(options.folder).length) {
+        callback(new Error('Build folder doesn\'t exist or is empty.')); return;
+      }
       fs.readdirSync(path.join(options.cwd, options.folder))
         .forEach((file) => {
           fs.renameSync(path.join(options.cwd, options.folder, file),

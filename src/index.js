@@ -54,7 +54,7 @@ function buildBranch(options, callback) {
       });
       // Check if build folder exists and is not empty
       if(!fs.existsSync(options.folder) || !fs.readdirSync(options.folder).length) {
-        callback('Build folder doesn\'t exist or is empty.'); return;
+        callback(new Error('Build folder doesn\'t exist or is empty.')); return;
       }
       fs.readdirSync(path.join(options.cwd, options.folder))
         .forEach((file) => {

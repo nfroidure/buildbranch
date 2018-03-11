@@ -49,7 +49,7 @@
     "github"
   ],
   "dependencies": {
-    "debug": "2.6.1",
+    "debug": "2.6.9",
     "rimraf": "^2.5.2"
   },
   "devDependencies": {

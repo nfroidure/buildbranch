@@ -25,7 +25,6 @@
     "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
     "lint": "eslint src/**.js",
     "metapak": "metapak",
-    "postinstall": "npm run metapak; npm run metapak --silent",
     "preversion": "npm t && npm run lint && npm run metapak -s",
     "test": "exit 0",
     "version": "npm run changelog && git add CHANGELOG.md"

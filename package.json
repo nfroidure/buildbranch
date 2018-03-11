@@ -24,9 +24,9 @@
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
     "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
     "lint": "eslint src/**.js",
-    "metapak": "metapak || echo 'Please `npm install --save-dev metapak`' && exit 0",
+    "metapak": "metapak",
     "postinstall": "npm run metapak; npm run metapak --silent",
-    "preversion": "npm t && npm run lint",
+    "preversion": "npm t && npm run lint && npm run metapak -s",
     "test": "exit 0",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
@@ -49,19 +49,18 @@
     "github"
   ],
   "dependencies": {
-    "debug": "2.6.9",
     "rimraf": "^2.5.2"
   },
   "devDependencies": {
     "commitizen": "^2.9.6",
-    "conventional-changelog-cli": "^1.2.0",
+    "conventional-changelog-cli": "^1.3.5",
     "coveralls": "2.11.15",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "3.16.0",
     "eslint-config-simplifield": "4.1.1",
     "istanbul": "0.4.5",
-    "metapak": "0.0.18",
-    "metapak-nfroidure": "^0.4.1",
+    "metapak": "1.0.3",
+    "metapak-nfroidure": "^1.0.2",
     "mocha": "3.2.0",
     "mocha-lcov-reporter": "1.3.0"
   },
@@ -72,15 +71,8 @@
   },
   "greenkeeper": {
     "ignore": [
-      "debug",
-      "eslint",
-      "eslint-config-simplifield",
-      "mocha",
-      "mocha-lcov-reporter",
       "commitizen",
       "cz-conventional-changelog",
-      "coveralls",
-      "istanbul",
       "conventional-changelog-cli"
     ]
   }

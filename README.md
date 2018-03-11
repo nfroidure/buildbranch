@@ -7,11 +7,9 @@
 > Publish a folder to the given build branch (like gh-pages).
 
 [![NPM version](https://badge.fury.io/js/buildbranch.svg)](https://npmjs.org/package/buildbranch)
-[![Build status](https://secure.travis-ci.org/nfroidure/buildbranch.svg)](https://travis-ci.org/nfroidure/buildbranch)
 [![Dependency Status](https://david-dm.org/nfroidure/buildbranch.svg)](https://david-dm.org/nfroidure/buildbranch)
 [![devDependency Status](https://david-dm.org/nfroidure/buildbranch/dev-status.svg)](https://david-dm.org/nfroidure/buildbranch#info=devDependencies)
 [![Coverage Status](https://coveralls.io/repos/nfroidure/buildbranch/badge.svg?branch=master)](https://coveralls.io/r/nfroidure/buildbranch?branch=master)
-[![Code Climate](https://codeclimate.com/github/nfroidure/buildbranch.svg)](https://codeclimate.com/github/nfroidure/buildbranch)
 [![Dependency Status](https://dependencyci.com/github/nfroidure/buildbranch/badge)](https://dependencyci.com/github/nfroidure/buildbranch)
 
 ## Usage

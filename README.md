@@ -33,6 +33,32 @@ Then, from your master branch, run `buildbranch` with the branch and directory
 buildbranch gh-pages www example.com
 ```
 
+All arguments are optional, the defaults being:
+
+* branch: `'gh-pages'`
+* folder: `'www'´
+* domain: `''`
+
+#### Skipping the pre-commit hook
+
+buildbranch will run `git commit` in the given branch. You might want to skip the pre-commit hook if there is one. This can be archived by adding another command line argument:
+
+```shell
+buildbranch gh-pages www example.com no-verify
+```
+
+Actually, anytime four arguments are passed, `git commit` will be run with `--no-verify`, skipping the pre-commit and commit-msg hook, it does not matter if you pass `no-verify` or any other non-empty string as the fourth argument.
+
+```shell
+buildbranch gh-pages www example.com no-verify
+```
+
+If you want to skip have `--no-verify` but do not want to specify a domain, use
+
+```shell
+buildbranch gh-pages www '' no-verify
+```
+
 ### Build System
 
 First, install `buildbranch` as a development dependency:
@@ -50,6 +76,7 @@ Then, use it in your build system:
     ignore: ['.git', 'www', 'node_modules'],
     folder: 'www',
     domain: 'example.com',
+    noVerify: false
   }, function(err) {
     if(err) {
       throw err;
@@ -125,6 +152,12 @@ Type: `Array`
 
 A list of files to ignore. 'node_modules' and '.git' will be automatically
  added to the ignore list.
+
+##### options.noVerify
+Type: `Boolean`
+Default: false
+
+Whether or not to add `--no-verify` when running `git commit` (skipping the pre-commit and commit-msg hook).
 
 #### callback
 Type: `Function`

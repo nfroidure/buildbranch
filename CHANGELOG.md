@@ -1,3 +1,8 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/nfroidure/buildbranch/compare/v2.0.0...v2.0.1) (2018-03-15)
+
+
+
 
 ### v2.0.0 (2017/02/18 05:32 +00:00)
 - [ba25e2b](https://github.com/nfroidure/buildbranch/commit/ba25e2bf7caa23e4ecf64fdf654ca5b21821a543) 2.0.0 (@nfroidure)

@@ -48,7 +48,8 @@
     "github"
   ],
   "dependencies": {
-    "rimraf": "^2.5.2"
+    "rimraf": "^2.5.2",
+    "shell-escape": "^0.2.0"
   },
   "devDependencies": {
     "commitizen": "^2.9.6",

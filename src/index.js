@@ -4,6 +4,7 @@ const exec = require('child_process').exec;
 const path = require('path');
 const rimraf = require('rimraf');
 const fs = require('fs');
+const shellescape = require('shell-escape')
 
 function buildBranch(options, callback) {
 
@@ -12,15 +13,15 @@ function buildBranch(options, callback) {
   let command = '';
 
   // Checking options
-  options.folder = options.folder || 'www';
-  options.branch = options.branch || 'gh-pages';
-  options.remote = options.remote || 'origin';
+  options.folder = shellescape([options.folder]) || 'www';
+  options.branch = shellescape([options.branch]) || 'gh-pages';
+  options.remote = shellescape([options.remote]) || 'origin';
   options.ignore = options.ignore || [];
   options.ignore.push('.git', 'node_modules', options.folder);
-  options.cname = options.cname || 'CNAME';
-  options.commit = (options.commit || 'Build $').replace('$', (new Date()).toISOString());
-  options.cwd = options.cwd || process.cwd();
-  options.noVerify = options.noVerify || false;
+  options.cname = shellescape([options.cname]) || 'CNAME';
+  options.commit = (shellescape([options.commit]) || 'Build $').replace('$', (new Date()).toISOString());
+  options.cwd = shellescape([options.cwd]) || process.cwd();
+  options.noVerify = shellescape([options.noVerify]) || false;
   execOptions.cwd = options.cwd;
 
   // Remember the current branch
